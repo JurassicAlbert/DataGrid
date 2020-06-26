@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Type;
+namespace App\Trait;
 
-use DataType;
-
-class MoneyType extends NumberType implements DataType
+trait Currency
 {
 
     private string $currency = "PLN";
@@ -14,6 +12,7 @@ class MoneyType extends NumberType implements DataType
 
     public function format(string $value): string
     {
+        parent::format();
         return $value;
     }
 

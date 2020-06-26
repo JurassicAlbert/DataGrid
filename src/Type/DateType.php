@@ -6,7 +6,8 @@ namespace App\Type;
 
 use DataType;
 
-class DateType implements DataType {
+class DateType implements DataType
+{
     
     private string $date;
     private string $dateFormat;

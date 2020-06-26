@@ -6,7 +6,8 @@ namespace App\Type;
 
 use DataType;
 
-class NumberType implements DataType {
+class NumberType implements DataType
+{
 
     private string $decimalPoint = ",";
     private string $thousandsSeparator = "&nbsp;";
@@ -17,6 +18,7 @@ class NumberType implements DataType {
 
     public function format(string $value): string
     {
+        $value = strval($this->number);
         return $value;
     }
 
@@ -61,6 +63,12 @@ class NumberType implements DataType {
            $mode = $mode="PHP_ROUND_HALF_ODD";
         }
         $number = round($number, $decimalsPrecision, $mode);
+        return $number;
+    }
+    
+    public function getNumber(): float 
+    {
+        $number = $this->number;
         return $number;
     }
 }

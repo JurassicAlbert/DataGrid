@@ -24,7 +24,7 @@ interface Column
      */
     public function withDataType(DataType $type): Column;
 
-    public function getDataType(): DateType;
+    public function getDataType(): DataType;
 
     /**
      * Ustawienie wyrównania treści znajdujących się w kolumnie.
