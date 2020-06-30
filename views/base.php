@@ -1,5 +1,7 @@
 <?php 
-if (! isset($_COOKIE["tableHead"]))
+session_start();
+
+if (! isset($_SESSION["tableHead"]))
 {
     header("Location: /datagrid");
 }
@@ -11,7 +13,6 @@ if (! isset($_COOKIE["tableHead"]))
 <!--[if gt IE 8]><!-->
 <html class="no-js">
 <!--<![endif]-->
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,9 +20,10 @@ if (! isset($_COOKIE["tableHead"]))
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="https://use.fontawesome.com/09a1cdb215.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
 </head>
 
 <body>
@@ -32,30 +34,36 @@ if (! isset($_COOKIE["tableHead"]))
                 <h4 class="">Biblioteka do łatwego formatowania i renderowania tabel z danymi.</h4>
             </div>
         </header>
-        <section class="border border-dotted rounded p-2">
-            <h1></h1>
+        <section class="border border-dotted rounded p-2 d-flex-column justify-content-center">
+        <?php 
+            if (isset($_SESSION['error'])) 
+            {
+                print('<div class="p-2 m-2 alert alert-danger" role="alert">'.$_SESSION["error"].'</div>');
+                unset($_SESSION['error']);
+            } 
+        ?>
             <form action="/datagrid/" method="GET">
-            <table id="renderTable" class='table table-lg table-bordered p-0 m-0'>
-                <thead>
-                    <tr>
-                        <?=  $_COOKIE["tableHead"]; ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?= $_COOKIE["tableBody"] ?>
-                </tbody>
-            </table>
-            <div class="d-flex-column align-items-center text-center justify-content-center">
-                <nav aria-label="..." class="d-flex justify-content-center pt-2">
-                    <ul class="pagination d-flex p-0 m-0">
-                      <?= $_COOKIE["tablePagination"] ?>
-                    </ul>
-                </nav>
-                <div class="pt-2 d-flex-inline align-items-center justify-content-center">
-                    <div><label for="rows">Il. wierszy: </label><?= $_COOKIE['rows'] ?></div>
-                    <div><button type="submit" class="btn btn-link">Renderuj</button></div>
+                <table id="renderTable" class='table table-lg table-bordered p-0 m-0'>
+                    <thead>
+                        <tr>
+                            <?=  $_SESSION["tableHead"]; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?= $_SESSION["tableBody"] ?>
+                    </tbody>
+                </table>
+                <div class="d-flex-column align-items-center text-center justify-content-center">
+                    <nav aria-label="..." class="d-flex justify-content-center pt-2">
+                        <ul class="pagination d-flex p-0 m-0 flex-wrap">
+                            <?= $_SESSION["tablePagination"] ?>
+                        </ul>
+                    </nav>
+                    <div class="pt-2 d-flex-inline align-items-center justify-content-center">
+                        <div><label for="rows">Il. wierszy: </label><?= $_SESSION['rows'] ?></div>
+                        <div><button type="submit" class="btn btn-link">Renderuj</button></div>
+                    </div>
                 </div>
-            </div>
             </form>
         </section>
     </div>

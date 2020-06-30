@@ -12,7 +12,6 @@ use App\Schema\{
 trait Render
 {
     private $config;
-    private $gridEl = 0;
 
     public function withConfig(Config $config): DataGrid
     {
@@ -28,11 +27,14 @@ trait Render
         if($rowsPerPage <= 0) {
             $rowsPerPage = 1;
         }
+        var_dump($rowsPerPage);
         $renderRows = $rowsPerPage*$currPage;
+        var_dump($rowsPerPage);
         $count = count($rows);
         $orderBy = $state->getOrderBy();
         $orderType = $state->isOrderASC() + $state->isOrderDesc();
-        $this->configPage($columnSet, $rows, $rowsPerPage, $currPage, $count, $renderRows, $orderBy, $orderType);
+        $config = $this->configPage($columnSet, $rows, $rowsPerPage, $currPage, $count, $renderRows, $orderBy, $orderType);
+        $this->prependRender(...$config);
     }
 
     private function configPage($columnSet, $rows, $rowsPerPage, $currPage, $count, $renderRows, $orderBy, $orderType)
@@ -41,11 +43,9 @@ trait Render
         {
             $renderRows = $count;
         }
-        if ($currPage > 1) 
-        {
-            $this->gridEl = ($renderRows-$rowsPerPage);
-        }
         $pages = ceil($count/$rowsPerPage);
-        $this->prependRender($columnSet, $rows, $this->gridEl, $renderRows, $currPage, $pages, $rowsPerPage, $orderBy, $orderType);
+        $gridEl = ($renderRows - $rowsPerPage);
+        $args = [$columnSet, $rows, $gridEl, $renderRows, $currPage, $pages, $rowsPerPage, $orderBy, $orderType];
+        return $args;
     }
 }

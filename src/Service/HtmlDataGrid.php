@@ -16,7 +16,7 @@ final class HtmlDataGrid extends DataGrid
     use Render;
 
     private function prependRender($columnSet, $rows, $gridEl, $renderRows, $currPage, $pages, $rowsPerPage, $sortKey, $orderType): void
-    {
+    { 
         $this->sortKey = $sortKey;
         foreach ($columnSet as $column)
         {
@@ -38,7 +38,6 @@ final class HtmlDataGrid extends DataGrid
         }
         foreach ($renderHeaders as $th)
         {
-            $this->htmlHead .= $orderType;
             $this->htmlHead .= "".
             "<th><input class='btn btn-link border-0 p-0' type='submit' name='order' id='order' value='".$th."'>";
             if ($th == $sortKey)
@@ -51,7 +50,7 @@ final class HtmlDataGrid extends DataGrid
                     $this->htmlHead .= " <i class='fa fa-arrow-down'></input>".
                     "<input type='hidden' name='orderReset' id='orderReset' value='1'>";;
                 }
-                $this->order = $orderType;   
+                $this->order = $orderType;  
             }
             $this->htmlHead .= "</th>";
         }
@@ -81,28 +80,23 @@ final class HtmlDataGrid extends DataGrid
             }
             $this->htmlBody .= "</tr>";
         }
-        $cActive = $paginInput =  '';
+        $pagInput =  '';
         for ($n = 1; $n <= $pages; $n++)
         {
             if($n == $currPage) {
                 $cActive = 'active';
             }
-            $paginInput .= "<li class='page-item ".$cActive."'>".
-            "<input type='submit' name='page' class='page-link' value='".$n."'>".
+            $pagInput .= "<li class='page-item ".$cActive."'>".
+            "<input type='submit' name='pages[]' class='page-link' value='".$n."'>".
             "</li>";
             $cActive = '';
         }
         $rows = "<input id='rows' name='rows' type='number' max='9' min='1' value='".$rowsPerPage."'>";
-        setcookie('tableHead', $this->htmlHead, time()+3600);
-        setcookie('tableBody', $this->htmlBody, time()+3600);
-        setcookie('tablePagination', $paginInput, time()+3600);
-        setcookie('rows', $rows, time()+3600);
+        $_SESSION['tableHead'] = $this->htmlHead;
+        $_SESSION['tableBody'] = $this->htmlBody;
+        $_SESSION['tablePagination'] = $pagInput;
+        $_SESSION['rows'] = $rows;
         header("Location: views/base");
         //print($this->html);
-    }
-
-    private function sortTable(array $rows, bool $direction)
-    {
-        
     }
 }

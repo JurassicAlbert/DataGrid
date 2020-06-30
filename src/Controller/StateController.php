@@ -14,7 +14,7 @@ class StateController implements State
     private $orderDESC;
     private $rows;
 
-    public function __construct(int $currentPage, ?string $orderBy = null, bool $orderASC, bool $orderDESC, int $rows) {
+    public function __construct(int $currentPage, ?string $orderBy, bool $orderASC, bool $orderDESC, int $rows) {
         $this->currentPage = $currentPage;
         $this->orderBy = $orderBy;
         $this->orderASC = $orderASC;

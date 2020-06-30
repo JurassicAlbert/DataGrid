@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+$GLOBALS["view"] = "views/base";
+ini_set('display_errors', '0');
+session_start();
 
 require_once realpath("vendor/autoload.php");
 
@@ -36,6 +39,17 @@ function getRows($file, $method="GET")
     ]
   ];
   $context = stream_context_create($opts);
-  $rows = json_decode(file_get_contents($file, false, $context), true);
-  return $rows;
+  try {
+    $rows = json_decode(file_get_contents($file, false, $context), true);
+    if(is_array($rows) == false) {
+      throw new Exception;
+    }
+    if(is_array($rows)) 
+    {
+      return $rows;
+    }
+  } catch (Exception $e) {
+    header("Location: ".$GLOBALS['view']);
+    return $_SESSION["error"] = "Błąd krytyczny! Nie można załadować danych! ".$e;
+  }
 }
