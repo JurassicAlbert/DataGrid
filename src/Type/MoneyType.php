@@ -4,31 +4,12 @@ declare(strict_types=1);
 
 namespace App\Type;
 
-use DataType;
+use App\Helper\Number;
 
-class MoneyType extends NumberType implements DataType
+use App\Schema\DataType as DataTypeFormatter;
+
+class MoneyType implements DataTypeFormatter
 {
-
-    private string $currency = "PLN";
-    private string $value;
-
-    public function format(string $value): string
-    {
-        return $value;
-    }
-
-    public function __construct(NumberType $number, $currency)
-    {
-        $number = $number->getNumber();
-        $number = strval($number);
-        $this->value=$number.$currency;
-    }
-
-    /*
-    public function __construct()
-    {
-        $this->value = __CLASS__.$currency;
-    }
-    */
+    use Number;
 }
 

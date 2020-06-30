@@ -4,14 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use State;
+use App\Schema\State;
 
 class StateController implements State
 {
-    private int $currentPage;
-    private string $orderBy;
-    private bool $orderType;
-    private int $rows;
+    public $currentPage;
+    private $orderBy;
+    private $orderASC;
+    private $orderDESC;
+    private $rows;
+
+    public function __construct(int $currentPage, ?string $orderBy = null, bool $orderASC, bool $orderDESC, int $rows) {
+        $this->currentPage = $currentPage;
+        $this->orderBy = $orderBy;
+        $this->orderASC = $orderASC;
+        $this->orderDESC = $orderDESC;
+        $this->rows = $rows;
+    }
 
     public function getCurrentPage(): int
     {
@@ -25,12 +34,12 @@ class StateController implements State
 
     public function isOrderDesc(): bool
     {
-        return ! $this->orderType;
+            return $this->orderDESC;
     }
 
     public function isOrderAsc(): bool
     {
-        return $this->orderType;
+            return $this->orderASC;
     }
 
     public function getRowsPerPage(): int

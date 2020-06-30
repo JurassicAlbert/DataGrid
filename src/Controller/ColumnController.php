@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Column;
-use DataType;
+use App\Schema\{
+    Column,
+    DataType
+};
 
-class ColumnController implements Column, DataType
+class ColumnController implements Column
 {
-    private string $label;
+    private $label;
     private $type;
-    private string $align;
+    private $align;
 
     public function withLabel(string $label): Column
     {
@@ -23,6 +25,7 @@ class ColumnController implements Column, DataType
     {
         return $this->label;
     }
+
     public function withDataType(DataType $type): Column
     {
         $this->type = $type;

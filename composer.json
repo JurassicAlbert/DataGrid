@@ -1,7 +1,10 @@
 {
     "autoload": {
-        "psr-12": {
+        "psr-4": {
             "App\\": "src/"
         }
+    },
+    "require": {
+        "php": ">=7.2.14"
     }
 }

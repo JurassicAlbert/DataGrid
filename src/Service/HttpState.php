@@ -1,15 +1,47 @@
 <?php 
 
-declare(strict_types=1);
-
 namespace App\Service;
 
-use App\Controller\StateController as State;
+use App\Controller\StateController;
 
-class HttpState extends State
+final class HttpState extends StateController
 {
-    public static function create(State $state): State
+    public static function create()
     {
-        return $state;
+        $page = 1;
+        $orderBy = ""; 
+        $rows = $maxRows = 9;
+        //orderTYPE = 0
+        $orderASC = 0;
+        $orderDESC = 0;
+        if (isset($_GET['page']))
+        {
+            $page = intval($_GET['page']);
+        }
+        if (
+            isset($_GET['rows'])
+            && intval($_GET['rows']) <= $maxRows
+            )
+        {
+            $rows = intval($_GET['rows']);
+        }
+        if (isset($_GET['order']))
+        {
+            $orderBy = strval($_GET['order']);
+                    //orderTYPE = 1
+            $orderASC = 1;
+            $orderDESC = 0;
+            if(isset($_GET['orderDESC'])) {
+                $orderDESC = 1;
+                $orderASC = 1;
+            }
+            if(isset($_GET['orderReset'])) {
+                $orderDESC = 0;
+                $orderASC = 0;
+            }
+        }
+   
+
+        return new StateController($page, $orderBy, $orderASC, $orderDESC, $rows);
     }
 }

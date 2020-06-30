@@ -2,20 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Controller;
 
-use Config;
-use Column;
+use App\Schema\{
+    Config,
+    Column
+};
 
-class ConfigController implements Config, Column
+class ConfigController implements Config
 {
-    private string $key;
-    private $columns;
+    private $key;
+    private $columns = [];
 
     public function addColumn(string $key, Column $column): Config
     {
         $this->key = $key;
-        $this->columns->add($column);
+        $column
+            ->withLabel($key);
+        $this->columns[] = $column;
         return $this;
     }
 

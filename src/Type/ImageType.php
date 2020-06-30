@@ -4,33 +4,32 @@ declare(strict_types=1);
 
 namespace App\Type;
 
-use DataType;
+use App\Schema\DataType as DataTypeFormatter;
 
-class ImageType implements DataType {
+class ImageType implements DataTypeFormatter
+{   
+    private $imgUrl;
+    private $sizeX;
+    private $sizeY;
     
-    private string $imgUrl;
-    private string $sizeX = "16px";
-    private string $sizeY = "16px";
-    private string $image;
-
     public function format(string $value): string
     {
+        if (filter_var($value, FILTER_VALIDATE_URL) == false)
+        {
+            return $value = "⚠";
+        }
+        $value = $insertImg = '<img src="'.$value.'" width="'.$this->sizeX.'" height="'.$this->sizeY.'">';
         return $value;
     }
 
-    public function __construct(string $imgUrl, string $sizeX, string $sizeY, string $image)
-    {
+    public function __construct(
+        ?string $imgUrl = "https://thaibah.com/dev/assets/img/default-img.jpg",
+        ?string $sizeX = "16px",
+        ?string $sizeY = "16px"
+        ) {
+        $this->imgUrl = $imgUrl;
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
-        $this->imgUrl = $imgUrl;
-        $insertImg = '<img src="'.$imgUrl.'" width="'.$sizeX.'" height="'.$sizeY.'">';
-        $this->$image = $insertImg;
-    }
-
-    public function addImage(): string
-    {
-        $image = $this->image;
-        return print($image);
     }
 }
 

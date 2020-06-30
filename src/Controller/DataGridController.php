@@ -4,52 +4,26 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use DataGrid;
-use Config;
-use State;
+use App\Schema\DataGrid;
+use App\Helper\Render;
 
 class DataGridController implements DataGrid
 {
-    private $config;
-    private array $gridRender;
-
-    public function withConfig(Config $config): DataGrid
+    use Render;
+    
+    private function prependRender($columnSet, $rows, $gridEl, $renderRows): void
     {
-        $this->config = $config;
-        return $this;
-    }
-
-    public function render(array $rows, State $state): void
-    {
-        $prepareRows = $this->sortData($rows, $state);
-        $pageSize = $state->getRowsPerPage();
-        $this->gridRender = $this->prepareRender($prepareRows, $pageSize);
-    }
-
-    private function sortData($array, $state): array
-    {
-        $sortKey = $state->getOrderBy();
-        $array = array_column($array, $sortKey);
-        $sortMode = $state->isOrderDesc();
-        $sortMode ? rsort($array) : natsort($array);
-        return $array;
-    }
-
-    private function prepareRender($array, $pageSize): array
-    {
-        $pages = [];
-        $n = $i = 0;
-        foreach ($array as $row)
+        foreach ($columnSet as $column) 
         {
-            $pages[$n] = array_push($pagesToRender, $row);
-            if ($pageSize = $i) 
-            {
-                $i = 0;
-                $n++;
-            }
-            $i++;
+           $renderHeaders[] = $column->getLabel();
         }
-        return $pages;
+        for ($i = $gridEl; $i < $renderRows; $i++)
+        {
+            foreach ($columnSet as $column)
+            {
+               $renderBody[$i] =  $rows[$i][$column->getLabel()];
+            }
+        }
     }
     
 }

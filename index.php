@@ -1,21 +1,41 @@
 <?php
 
-use App\Service\HttpState;
-use App\Service\HtmlDataGrid;
-use App\Service\DefaultConfig;
+declare(strict_types=1);
 
 require_once realpath("vendor/autoload.php");
-$rows = json_decode(file_get_contents("data.json"), true);
-$state = HttpState::create(); // instanceof State, dane powinny zostać pobrane z $_GET
 
+use App\Service\{
+  HttpState,
+  HtmlDataGrid,
+  DefaultConfig
+};
+
+$rows = getRows("./data.json", "GET");
+
+$state = HttpState::create(); // instanceof State
 $dataGrid = new HtmlDataGrid(); // instanceof DataGrid
-$config = (new DefaultConfig) // instanceof Config, z dodatkowymi metodami
-    ->addIntColumn('id')
+$config = (new DefaultConfig) // instanceof Config
+    ->addIntColumn('id', true)
     ->addTextColumn('name')
-    ->addIntColumn('age')
+    ->addIntColumn('age', true)
     ->addTextColumn('company')
     ->addCurrencyColumn('balance', 'USD')
     ->addTextColumn('phone')
     ->addTextColumn('email');
 
 echo $dataGrid->withConfig($config)->render($rows, $state);
+
+function getRows($file, $method="GET")
+{
+  $opts = [
+    'http'=> [
+      'method'=>$method,
+      'header'=>
+        "Accept-language: en\r\n" .
+        "Cookie: foo=bar\r\n"
+    ]
+  ];
+  $context = stream_context_create($opts);
+  $rows = json_decode(file_get_contents($file, false, $context), true);
+  return $rows;
+}

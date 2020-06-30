@@ -4,31 +4,44 @@ declare(strict_types=1);
 
 namespace App\Type;
 
-use DataType;
+use App\Schema\DataType as DataTypeFormatter;
 
-class LinkType implements DataType {
+class LinkType implements DataTypeFormatter {
     
-    private bool $linkTag;
-    private string $bootstrapClass;
-    private string $link;
-    private string $linkText;
+    private $linkTag;
+    private $color;
+    private $availableColors = [
+        "primary",
+        "warning",
+        "danger",
+        "success",
+        "info"
+    ];
+    private $link;
 
     public function format(string $value): string
     {
+        if (in_array($this->color, $this->availableColors) == false)
+        {
+            return $value = "⚠";
+        }
+        $value = filter_var($value, FILTER_SANITIZE_URL);
+        if ($this->linkTag) 
+        {
+            $value = '<button onclick="window.location.href='.$value.'" class="btn b3__btn-'.$this->color.'" >link</button>';
+        } else {
+           $value = '<a href="'.$value.'" class="link b3__text-'.$this->color.'">link</a>';
+        }
         return $value;
     }
 
-    public function __construct(bool $linkTag, ?string $bootstrapClass, string $link, string $linkText)
-    {
-        $this->$link = '<a href="'.$link.'" class="'.$bootstrapClass.'"></a>';
-        if ($linkTag) {
-            $this->$link = '<button onclick="window.location.href='.$link.'">'.$linkText.'</button>';
-        }
+    public function __construct(
+        ?bool $linkTag = 0,
+        ?string $color = "primary"
+        ) {
+        
+        $this->linkTag = $linkTag;
+        $this->color = $color;
     }
 
-    public function addLink(): string
-    {
-        $link = $this->link;
-        return print($link);
-    }
 }

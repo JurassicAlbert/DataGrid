@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Type;
 
-use DataType;
+use App\Schema\DataType;
 
-class TextType implements DataType {
+class TextType implements DataType 
+{
 
-    private string $text;
-
-    public function format(string $text): string
+    public function format(string $value): string
     {
-        $this->$text = filter_var($text, FILTER_SANITIZE_STRING);
-        return $this->$text;
+        if (is_string(gettype($value))) {
+            $value = filter_var($value, FILTER_SANITIZE_STRING);
+            return $value;
+        }
+        return $value= "⚠";
     }
 }
 
