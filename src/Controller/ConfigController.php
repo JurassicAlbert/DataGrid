@@ -30,7 +30,8 @@ class ConfigController implements Config
         return $this->columns;
     }
 
-    public function __construct(?string $alignColumn = "center") {
+    public function __construct(?string $alignColumn = "center") 
+    {
         $this->alignColumn = $alignColumn;
     }
 }

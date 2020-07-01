@@ -21,22 +21,19 @@ final class DefaultConfig extends Config
 {
     public function addIntColumn(
         string $key,
-        ?string $align = null,
         ...$args
     ): self {
         $numberType = new NumberType(...$args);
-        $numberColumn = (new Column($align))
+        $numberColumn = (new Column())
             ->withDataType($numberType);
         parent::addColumn($key, $numberColumn);
         return $this;
     }
 
-    public function addTextColumn(
-    string $key,
-    ?string $align = null
-    ): self {
+    public function addTextColumn(string $key): self 
+    {
         $textType = new TextType;
-        $textColumn = (new Column($align))
+        $textColumn = (new Column())
             ->withDataType($textType);
         parent::addColumn($key, $textColumn);
         return $this;
@@ -45,11 +42,10 @@ final class DefaultConfig extends Config
     public function addCurrencyColumn(
         string $key,
         string $currency,
-        ?string $align = null,
         ...$args
     ): self {
         $currencyType = new MoneyType($currency, ...$args);
-        $currencyColumn = (new Column($align))
+        $currencyColumn = (new Column())
             ->withDataType($currencyType);
         parent::addColumn($key, $currencyColumn);
         return $this;
@@ -57,11 +53,10 @@ final class DefaultConfig extends Config
 
     public function addLinkColumn(
         string $key,
-        ?string $align,
         ...$args
         ): self {
         $linkType = new LinkType(...$args);
-        $linkColumn = (new Column($align))
+        $linkColumn = (new Column())
             ->withDataType($linkType);
         parent::addColumn($key, $linkColumn);
         return $this;
@@ -69,11 +64,10 @@ final class DefaultConfig extends Config
 
     public function addImageColumn(
         string $key,
-        ?string $align,
         ...$args
         ): self {
         $imageType = new ImageType(...$args);
-        $imageColumn = (new Column($align))
+        $imageColumn = (new Column())
             ->withDataType($imageType);
         parent::addColumn($key, $imageColumn);
         return $this;
@@ -81,11 +75,10 @@ final class DefaultConfig extends Config
 
     public function addRawColumn(
         string $key,
-        ?string $align,
         ...$args
         ): self {
         $rawType = new RawType(...$args);
-        $rawColumn = (new Column($align))
+        $rawColumn = (new Column())
             ->withDataType($rawType);
         parent::addColumn($key, $rawColumn);
         return $this;

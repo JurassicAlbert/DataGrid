@@ -1,2 +1,2 @@
 FROM azez09/datagrid
-CMD [ "echo", "DataGrid successfully installed" ]
+CMD [ "composer", "dump-autoload -o" ]
