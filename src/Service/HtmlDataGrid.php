@@ -38,16 +38,9 @@ final class HtmlDataGrid extends DataGrid
                 }
             }
         }
-        foreach ($renderBody as $body) {
-            $this->htmlBody .= "<tr>";
-            foreach ($renderHeaders as $label) {
-                $this->htmlBody .= "<td class='text-".$labelAlign[$label]."'>".$body[$label]."</td>";
-            }
-            $this->htmlBody .= "</tr>";
-        }
         foreach ($renderHeaders as $th) {
             $this->htmlHead .= "" .
-                "<th class='text-".$labelAlign[$th]."'><input class='btn btn-link border-0 p-0' type='submit' name='order' id='order' value='" . $th . "'>";
+                "<th class='text-" . $labelAlign[$th] . "'><input class='btn btn-link border-0 p-0' type='submit' name='order' id='order' value='" . $th . "'>";
             if ($th == $sortKey) {
                 if ($orderType == 1) {
                     $this->htmlHead .= " <i class='fa fa-arrow-up'></i>" .
@@ -61,7 +54,7 @@ final class HtmlDataGrid extends DataGrid
             }
             $this->htmlHead .= "</th>";
         }
-         if ($this->sortKey) {
+        if ($this->sortKey) {
             usort($renderBody, function ($a, $b) {
                 if (is_numeric($a[$this->sortKey])) {
                     if ($this->order == 1) {
@@ -78,6 +71,13 @@ final class HtmlDataGrid extends DataGrid
                     return $a[$this->sortKey] <=> $b[$this->sortKey];
                 }
             });
+        }
+        foreach ($renderBody as $body) {
+            $this->htmlBody .= "<tr>";
+            foreach ($renderHeaders as $label) {
+                $this->htmlBody .= "<td class='text-" . $labelAlign[$label] . "'>" . $body[$label] . "</td>";
+            }
+            $this->htmlBody .= "</tr>";
         }
         $pagInput = "<input type='checkbox' class='invisible p-0 m-0' name='page' id='page' value='" . $currPage . "' checked>";
         for ($n = 1; $n <= $pages; $n++) {
@@ -97,7 +97,7 @@ final class HtmlDataGrid extends DataGrid
         $_SESSION['rows'] = $rows;
         header("Location: views/base");
     }
-/* 
+    /* 
     private function createHtmlBody(array $rows, array $label, array $keys, ?int $sorted = 0, int $gridEl, int $renderRows)
     {
         if ($sorted == true) {

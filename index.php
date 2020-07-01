@@ -1,7 +1,8 @@
 <?php
 
 declare(strict_types=1);
-ini_set('display_errors', '1');
+error_reporting(0);
+ini_set('display_errors', '0');
 session_start();
 
 require_once realpath("vendor/autoload.php");
@@ -40,14 +41,18 @@ function getRows($file, $method = "GET")
   $context = stream_context_create($opts);
   try {
     $rows = json_decode(file_get_contents($file, false, $context), true);
-    if (is_array($rows) == false) {
+    if (
+      is_array($rows) == false
+      || empty($rows)
+      ) {
       throw new Exception;
     }
     if (is_array($rows)) {
+      unset($_SESSION['error']);
       return $rows;
     }
   } catch (Exception $e) {
     header("Location: views/base");
-    return $_SESSION["error"] = "Critical Error! Render unvaible! " . $e;
+    return $_SESSION["error"] = "Critical Error! Render unvaible!";
   }
 }
