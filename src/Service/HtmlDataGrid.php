@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Controller\DataGridController as DataGrid;
-use App\Helper\Render;
+use App\Helper\RenderGrid;
 
 final class HtmlDataGrid extends DataGrid
 {
@@ -13,7 +13,7 @@ final class HtmlDataGrid extends DataGrid
     private $htmlHead;
     private $sortKey;
     private $order;
-    use Render;
+    use RenderGrid;
 
     private function prependRender($columnSet, $rows, $gridEl, $renderRows, $currPage, $pages, $rowsPerPage, $sortKey, $orderType): void
     {
@@ -43,11 +43,11 @@ final class HtmlDataGrid extends DataGrid
                 "<th class='text-" . $labelAlign[$th] . "'><input class='btn btn-link border-0 p-0' type='submit' name='order' id='order' value='" . $th . "'>";
             if ($th == $sortKey) {
                 if ($orderType == 1) {
-                    $this->htmlHead .= " <i class='fa fa-arrow-up'></i>" .
+                    $this->htmlHead .= " <i class='fa fa-sort-up'></i>" .
                         "<input type='hidden' name='orderDESC' id='orderDESC' value='1'>";
                 }
                 if ($orderType == 2) {
-                    $this->htmlHead .= " <i class='fa fa-arrow-down'></input>" .
+                    $this->htmlHead .= " <i class='fa fa-sort-down'></input>" .
                         "<input type='hidden' name='orderReset' id='orderReset' value='1'>";
                 }
                 $this->order = $orderType;

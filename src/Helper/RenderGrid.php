@@ -10,7 +10,7 @@ use App\Schema\{
     DataGrid
 };
 
-trait Render
+trait RenderGrid
 {
     private $config;
 
@@ -19,7 +19,7 @@ trait Render
         $this->config = $config;
         return $this;
     }
-
+    
     public function render(array $rows, State $state): void
     {
         $columnSet = $this->config->getColumns();
@@ -32,8 +32,8 @@ trait Render
         $count = count($rows);
         $orderBy = $state->getOrderBy();
         $orderType = $state->isOrderASC() + $state->isOrderDesc();
-        $config = $this->configPage($columnSet, $rows, $rowsPerPage, $currPage, $count, $renderRows, $orderBy, $orderType);
-        $this->prependRender(...$config);
+        $configPage = $this->configPage($columnSet, $rows, $rowsPerPage, $currPage, $count, $renderRows, $orderBy, $orderType);
+        $this->prependRender(...$configPage);
     }
 
     private function configPage($columnSet, $rows, $rowsPerPage, $currPage, $count, $renderRows, $orderBy, $orderType)
