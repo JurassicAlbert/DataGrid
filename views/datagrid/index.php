@@ -1,4 +1,4 @@
-<form action="/datagrid/" method="GET">
+<form action="/" method="GET">
     <table id="renderTable" class='table table-lg table-bordered p-0 m-0'>
         <thead>
             <tr>
