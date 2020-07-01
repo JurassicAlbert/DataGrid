@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["tableHead"])) {
-    header("Location: /datagrid");
+    header("Location: /");
 }
 ?>
 <!DOCTYPE html>
