@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-Namespace App\Schema;
+namespace App\Schema;
 
 interface State
 {
-/**
-* Zwraca aktualna strone DataGrid do wyświetlenia
-*/
-public function getCurrentPage(): int;
+    /**
+     * Zwraca aktualna strone DataGrid do wyświetlenia
+     */
+    public function getCurrentPage(): int;
 
-/**
-* Klucz kolumny, po której będzie sortowany DataGrid.
-*/
-public function getOrderBy(): string;
+    /**
+     * Klucz kolumny, po której będzie sortowany DataGrid.
+     */
+    public function getOrderBy(): string;
 
-/**
-* Czy dane mają zostać posortowane malejąco?
-*/
-public function isOrderDesc(): bool;
+    /**
+     * Czy dane mają zostać posortowane malejąco?
+     */
+    public function isOrderDesc(): bool;
 
-/**
-* Czy dane mają zostać posortowane rosnąco?
-*/
-public function isOrderAsc(): bool;
+    /**
+     * Czy dane mają zostać posortowane rosnąco?
+     */
+    public function isOrderAsc(): bool;
 
-/**
-* Zwraca ilośc wierszy które mają zostać wyświetlone na jednej stronie.
-*/
-public function getRowsPerPage(): int;
+    /**
+     * Zwraca ilośc wierszy które mają zostać wyświetlone na jednej stronie.
+     */
+    public function getRowsPerPage(): int;
 }

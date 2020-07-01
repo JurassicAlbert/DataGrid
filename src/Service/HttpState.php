@@ -13,13 +13,9 @@ final class HttpState extends StateController
         $rows = $maxRows = 9;
         $orderASC = 0;
         $orderDESC = 0;
-        if (isset($_GET['pages']))
+        if (isset($_GET['page']))
         {
-            $pages = $_GET['pages'];
-            foreach ($pages as $key => $n)
-            {
-                $page = $n;
-            }
+            $page = $_GET['page'];
         }
         if (
             isset($_GET['rows'])
@@ -30,6 +26,8 @@ final class HttpState extends StateController
         }
         if (isset($_GET['order']))
         {
+            $orderDESC = 0;
+            $orderASC = 1;
             $orderBy = strval($_GET['order']);
             if(isset($_GET['orderDESC'])) {
                 $orderDESC = 1;
@@ -40,8 +38,6 @@ final class HttpState extends StateController
                 $orderASC = 0;
             }
         }
-   
-
         return new StateController($page, $orderBy, $orderASC, $orderDESC, $rows);
     }
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -18,39 +18,47 @@ final class DefaultConfig extends Config
 {
     public function addIntColumn(
         string $key,
+        ?string $align = null,
         ...$args
-        ): self {
-        $numberType = new NumberType(null, ...$args);
-        $numberColumn = (new Column())
+    ): self {
+        $numberType = new NumberType(...$args);
+        $numberColumn = (new Column($align))
             ->withDataType($numberType);
         parent::addColumn($key, $numberColumn);
         return $this;
     }
 
-    public function addTextColumn(string $key): self
-    {
+    public function addTextColumn(
+    string $key,
+    ?string $align = null
+    ): self {
         $textType = new TextType;
-        $textColumn = (new Column())
+        $textColumn = (new Column($align))
             ->withDataType($textType);
         parent::addColumn($key, $textColumn);
         return $this;
     }
 
     public function addCurrencyColumn(
-        string $key, 
+        string $key,
         string $currency,
+        ?string $align = null,
         ...$args
-        ): self {
+    ): self {
         $currencyType = new MoneyType($currency, ...$args);
-        $currencyColumn = (new Column())
+        $currencyColumn = (new Column($align))
             ->withDataType($currencyType);
         parent::addColumn($key, $currencyColumn);
         return $this;
     }
 
-    public function addLinkColumn(string $key, ...$args): self {
+    public function addLinkColumn(
+        string $key,
+        ?string $align,
+        ...$args
+        ): self {
         $linkType = new MoneyType(...$args);
-        $linkColumn = (new Column())
+        $linkColumn = (new Column($align))
             ->withDataType($linkType);
         parent::addColumn($key, $linkColumn);
         return $this;

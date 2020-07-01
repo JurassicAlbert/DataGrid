@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -6,8 +6,8 @@ namespace App\Type;
 
 use App\Schema\DataType as DataTypeFormatter;
 
-class LinkType implements DataTypeFormatter {
-    
+class LinkType implements DataTypeFormatter
+{
     private $linkTag;
     private $color;
     private $availableColors = [
@@ -21,16 +21,14 @@ class LinkType implements DataTypeFormatter {
 
     public function format(string $value): string
     {
-        if (in_array($this->color, $this->availableColors) == false)
-        {
+        if (in_array($this->color, $this->availableColors) == false) {
             return $value = "⚠";
         }
         $value = filter_var($value, FILTER_SANITIZE_URL);
-        if ($this->linkTag) 
-        {
-            $value = '<button onclick="window.location.href='.$value.'" class="btn b3__btn-'.$this->color.'" >link</button>';
+        if ($this->linkTag) {
+            $value = '<button onclick="window.location.href=' . $value . '" class="btn btn-' . $this->color . '" >link</button>';
         } else {
-           $value = '<a href="'.$value.'" class="link b3__text-'.$this->color.'">link</a>';
+            $value = '<a href="' . $value . '" class="link text-' . $this->color . '">link</a>';
         }
         return $value;
     }
@@ -38,10 +36,9 @@ class LinkType implements DataTypeFormatter {
     public function __construct(
         ?bool $linkTag = 0,
         ?string $color = "primary"
-        ) {
-        
+    ) {
+
         $this->linkTag = $linkTag;
         $this->color = $color;
     }
-
 }

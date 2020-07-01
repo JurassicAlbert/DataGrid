@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -12,13 +12,15 @@ use App\Schema\{
 class ConfigController implements Config
 {
     private $key;
+    private $alignColumn;
     private $columns = [];
 
     public function addColumn(string $key, Column $column): Config
     {
         $this->key = $key;
         $column
-            ->withLabel($key);
+            ->withLabel($key)
+            ->withAlign($this->alignColumn);
         $this->columns[] = $column;
         return $this;
     }
@@ -26,5 +28,9 @@ class ConfigController implements Config
     public function getColumns(): array
     {
         return $this->columns;
+    }
+
+    public function __construct(?string $alignColumn = "center") {
+        $this->alignColumn = $alignColumn;
     }
 }

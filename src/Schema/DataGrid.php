@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-Namespace App\Schema;
+namespace App\Schema;
 
 interface DataGrid
 {

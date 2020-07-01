@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -14,7 +14,8 @@ class StateController implements State
     private $orderDESC;
     private $rows;
 
-    public function __construct(int $currentPage, ?string $orderBy, bool $orderASC, bool $orderDESC, int $rows) {
+    public function __construct(int $currentPage, ?string $orderBy, bool $orderASC, bool $orderDESC, int $rows)
+    {
         $this->currentPage = $currentPage;
         $this->orderBy = $orderBy;
         $this->orderASC = $orderASC;
@@ -34,12 +35,12 @@ class StateController implements State
 
     public function isOrderDesc(): bool
     {
-            return $this->orderDESC;
+        return $this->orderDESC;
     }
 
     public function isOrderAsc(): bool
     {
-            return $this->orderASC;
+        return $this->orderASC;
     }
 
     public function getRowsPerPage(): int
