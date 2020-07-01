@@ -18,9 +18,9 @@ $rows = getRows("./data.json", "GET");
 $state = HttpState::create(); // instanceof State
 $dataGrid = new HtmlDataGrid(); // instanceof DataGrid
 $config = (new DefaultConfig) // instanceof Config
-  ->addIntColumn('id', 'center', true)
+  ->addIntColumn('id', null, true)
   ->addTextColumn('name')
-  ->addIntColumn('age', 'center', true)
+  ->addIntColumn('age', null, true)
   ->addTextColumn('company')
   ->addCurrencyColumn('balance', 'USD')
   ->addTextColumn('phone')

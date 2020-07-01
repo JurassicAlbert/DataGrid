@@ -21,10 +21,12 @@ class LinkType implements DataTypeFormatter
 
     public function format(string $value): string
     {
-        if (in_array($this->color, $this->availableColors) == false) {
+        if (
+            in_array($this->color, $this->availableColors) == false
+            || filter_var($value, FILTER_SANITIZE_URL) == false
+        ) {
             return $value = "⚠";
         }
-        $value = filter_var($value, FILTER_SANITIZE_URL);
         if ($this->linkTag) {
             $value = '<button onclick="window.location.href=' . $value . '" class="btn btn-' . $this->color . '" >link</button>';
         } else {

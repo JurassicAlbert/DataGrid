@@ -11,7 +11,10 @@ use App\Controller\{
 use App\Type\{
     NumberType,
     TextType,
-    MoneyType
+    MoneyType,
+    LinkType,
+    RawType,
+    ImageType
 };
 
 final class DefaultConfig extends Config
@@ -57,10 +60,34 @@ final class DefaultConfig extends Config
         ?string $align,
         ...$args
         ): self {
-        $linkType = new MoneyType(...$args);
+        $linkType = new LinkType(...$args);
         $linkColumn = (new Column($align))
             ->withDataType($linkType);
         parent::addColumn($key, $linkColumn);
+        return $this;
+    }
+
+    public function addImageColumn(
+        string $key,
+        ?string $align,
+        ...$args
+        ): self {
+        $imageType = new ImageType(...$args);
+        $imageColumn = (new Column($align))
+            ->withDataType($imageType);
+        parent::addColumn($key, $imageColumn);
+        return $this;
+    }
+
+    public function addRawColumn(
+        string $key,
+        ?string $align,
+        ...$args
+        ): self {
+        $rawType = new RawType(...$args);
+        $rawColumn = (new Column($align))
+            ->withDataType($rawType);
+        parent::addColumn($key, $rawColumn);
         return $this;
     }
 }
