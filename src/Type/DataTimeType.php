@@ -9,55 +9,61 @@ use App\Schema\DataType as DataTypeFormatter;
 class DataTimeType implements DataTypeFormatter
 {
 
-    private $format;
+    private $formatDays;
+    private $formatHours;
 
     public function format(string $value): string
     {
         $date = new DateTime();
-        $value = "⚠";
         if (
             is_a($value, $date) == false
-            || $this->format <= 0
-            || $this->format > 10
+            || $this->formatDays < 1
+            || $this->formatDays > 7
+            || $this->formatHours > 4
         ) {
-            return $value;
+            return "⚠";
         }
-        if ($this->format == 1) {
-            $this->format = "Ymd";
+        if ($this->formatDays == 1) {
+            $this->formatDays = "Ymd";
         }
-        if ($this->format == 2) {
-            $this->format = "m.d.y";
+        if ($this->formatDays == 2) {
+            $this->formatDays = "m.d.y";
         }
-        if ($this->format == 3) {
-            $this->format = "j, n, Y";
+        if ($this->formatDays == 3) {
+            $this->formatDays = "j, n, Y";
         }
-        if ($this->format == 4) {
-            $this->format = "H:i:s";
+        if ($this->formatDays == 4) {
+            $this->formatDays = '\i\t \i\s \t\h\e jS \d\a\y';
+        } 
+        if ($this->formatDays == 5) {
+            $this->formatDays = "D M j T Y";
         }
-        if ($this->format == 5) {
-            $this->format = '\i\t \i\s \t\h\e jS \d\a\y.';
+        if ($this->formatDays == 6) {
+            $this->formatDays = "F j, Y, ";
+        } 
+        if ($this->formatDays == 7) {
+            $this->formatDays = "Y-m-d";
         }
-        if ($this->format == 6) {
-            $this->format = "H:i:s";
+        if ($this->formatHours == 1) {
+            $this->formatHours = "H:i:s";
         }
-        if ($this->format == 7) {
-            $this->format = "Y-m-d H:i:s";
+        if ($this->formatHours == 2) {
+            $this->formatHours = "G:i:s";
         }
-        if ($this->format == 8) {
-            $this->format = "D M j G:i:s T Y";
+        if ($this->formatHours == 3) {
+            $this->formatHours = "g:i a";
         }
-        if ($this->format == 9) {
-            $this->format = 'H:m:s \m \i\s\ \m\o\n\t\h';
+        if ($this->formatHours == 4) {
+            $this->formatHours = "H-I-S";
         }
-        if ($this->format == 10) {
-            $this->format = "F j, Y, g:i a";
-        }
+        $format = $this->formatDays." ".$this->formatHours;
         $value = $date->format($this->format);
         return $value;
     }
 
-    public function __construct(?int $format = 1)
+    public function __construct(?string $formatDays = 1, ?string $formatHours = 0)
     {
-        $this->format = $format;
+        $this->formatDays = $formatDays;
+        $this->formatHours = $formatHours;
     }
 }
