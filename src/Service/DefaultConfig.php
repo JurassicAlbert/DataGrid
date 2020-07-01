@@ -21,21 +21,24 @@ final class DefaultConfig extends Config
 {
     public function addIntColumn(
         string $key,
+        ?bool $disablePrecision = true,
         ...$args
     ): self {
-        $numberType = new NumberType(...$args);
+        $numberType = new NumberType($disablePrecision, ...$args);
         $numberColumn = (new Column())
             ->withDataType($numberType);
         parent::addColumn($key, $numberColumn);
         return $this;
     }
 
-    public function addTextColumn(string $key): self 
-    {
-        $textType = new TextType;
-        $textColumn = (new Column())
-            ->withDataType($textType);
-        parent::addColumn($key, $textColumn);
+    public function addFloatColumn(
+        string $key,
+        ...$args
+    ): self {
+        $numberType = new NumberType(...$args);
+        $numberColumn = (new Column())
+            ->withDataType($numberType);
+        parent::addColumn($key, $numberColumn);
         return $this;
     }
 
@@ -48,6 +51,15 @@ final class DefaultConfig extends Config
         $currencyColumn = (new Column())
             ->withDataType($currencyType);
         parent::addColumn($key, $currencyColumn);
+        return $this;
+    }
+
+    public function addTextColumn(string $key): self 
+    {
+        $textType = new TextType;
+        $textColumn = (new Column())
+            ->withDataType($textType);
+        parent::addColumn($key, $textColumn);
         return $this;
     }
 
