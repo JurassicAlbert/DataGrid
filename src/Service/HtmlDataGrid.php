@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Controller\DataGridController as DataGrid;
 use App\Helper\RenderGrid;
+use App\Helper\View;
 
 final class HtmlDataGrid extends DataGrid
 {
@@ -26,7 +27,6 @@ final class HtmlDataGrid extends DataGrid
                 $labelAlign[$label] = $column->getAlign();
             }
         }
-
         for ($i = $gridEl; $i < $renderRows; $i++) {
             foreach ($renderHeaders as $label) {
                 $formatColumn = $labelType[$label];
@@ -80,6 +80,7 @@ final class HtmlDataGrid extends DataGrid
             $this->htmlBody .= "</tr>";
         }
         $pagInput = "<input type='checkbox' class='invisible p-0 m-0' name='page' id='page' value='" . $currPage . "' checked>";
+        $cActive = '';
         for ($n = 1; $n <= $pages; $n++) {
             if ($n == $currPage) {
                 $cActive = 'active';
@@ -90,58 +91,11 @@ final class HtmlDataGrid extends DataGrid
             $cActive = '';
         }
         $rows = "<input id='rows' name='rows' type='number' max='9' min='1' value='" . $rowsPerPage . "'>";
-        $_SESSION['order'] = $this->order;
-        $_SESSION['tableHead'] = $this->htmlHead;
-        $_SESSION['tableBody'] = $this->htmlBody;
-        $_SESSION['tablePagination'] = $pagInput;
-        $_SESSION['rows'] = $rows;
-        header("Location: views/base");
+        $views = new View("base");
+        $views->assign("tableHead", $this->htmlHead);
+        $views->assign("tableBody", $this->htmlBody);
+        $views->assign("pagInput", $pagInput);
+        $views->assign("rows", $rows);
+       // header("Location: views/base");
     }
-    /* 
-    private function createHtmlBody(array $rows, array $label, array $keys, ?int $sorted = 0, int $gridEl, int $renderRows)
-    {
-        if ($sorted == true) {
-            $trTag['open'] = "<tr>";
-            $trTag['close'] = "</tr>";
-            $tdTag['open'] = "<td>";
-            $tdTag['close'] = "</td>";
-        }
-        for ($i = $gridEl; $i < $renderRows; $i++) {
-            $this->htmlBody .= $trTag['open']."error";
-            foreach ($keys as $key) {
-                $formatColumn = $label[$key];
-                if (isset(($rows[$i][$key]))) {
-                    $render[$i][$key] = $formatColumn->format((string) $rows[$i][$key]);
-                    preg_replace('/\s/u', '&nbsp;', $render[$i][$key]);
-                } else {
-                    $render[$i][$key] = "⚠";
-                }
-                $this->htmlBody .= $tdTag['open'] . $render[$i][$key] . $tdTag['close'];
-            }
-            $this->htmlBody .= $trTag['closed'];
-        }
-        if ($sorted == 0) {
-            if($this->sortKey) {
-                usort($render, function ($a, $b) {
-                    if (is_numeric($a[$this->sortKey])) {
-                        if ($this->order == 1) {
-                            return $a[$this->sortKey] > $b[$this->sortKey];
-                        }
-                        if ($this->order == 2) {
-                            return $a[$this->sortKey] < $b[$this->sortKey];
-                        }
-                    }
-                    if ($this->order == 1) {
-                        return $a[$this->sortKey] < $b[$this->sortKey];
-                    }
-                    if ($this->order == 2) {
-                        return $a[$this->sortKey] <=> $b[$this->sortKey];
-                    }
-                });
-            }
-           
-            $sorted = 1;
-            $this->createHtmlBody($rows, $label, $keys, $sorted, $gridEl, $renderRows);
-        }
-    } */
 }

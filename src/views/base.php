@@ -1,10 +1,4 @@
-<?php
-session_start();
 
-if (!isset($_SESSION["tableHead"])) {
-    header("Location: /");
-}
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -40,7 +34,7 @@ if (!isset($_SESSION["tableHead"])) {
             ?>
             <?php
             if (!isset($_SESSION['error'])) {
-                include "./datagrid/index.php";
+                include(__DIR__."/datagrid/index.php");
             }
             ?>
         </section>
