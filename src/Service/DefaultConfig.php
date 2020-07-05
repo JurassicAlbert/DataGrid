@@ -27,7 +27,7 @@ final class DefaultConfig extends Config
         $numberType = new NumberType($disablePrecision, ...$args);
         $numberColumn = (new Column())
             ->withDataType($numberType);
-        parent::addColumn($key, $numberColumn);
+        $this->addColumn($key, $numberColumn);
         return $this;
     }
 
@@ -38,7 +38,7 @@ final class DefaultConfig extends Config
         $numberType = new NumberType(...$args);
         $numberColumn = (new Column())
             ->withDataType($numberType);
-        parent::addColumn($key, $numberColumn);
+        $this->addColumn($key, $numberColumn);
         return $this;
     }
 
@@ -50,7 +50,7 @@ final class DefaultConfig extends Config
         $currencyType = new MoneyType($currency, ...$args);
         $currencyColumn = (new Column())
             ->withDataType($currencyType);
-        parent::addColumn($key, $currencyColumn);
+        $this->addColumn($key, $currencyColumn);
         return $this;
     }
 
@@ -59,7 +59,7 @@ final class DefaultConfig extends Config
         $textType = new TextType;
         $textColumn = (new Column())
             ->withDataType($textType);
-        parent::addColumn($key, $textColumn);
+        $this->addColumn($key, $textColumn);
         return $this;
     }
 
@@ -70,7 +70,7 @@ final class DefaultConfig extends Config
         $linkType = new LinkType(...$args);
         $linkColumn = (new Column())
             ->withDataType($linkType);
-        parent::addColumn($key, $linkColumn);
+        $this->addColumn($key, $linkColumn);
         return $this;
     }
 
@@ -81,7 +81,7 @@ final class DefaultConfig extends Config
         $imageType = new ImageType(...$args);
         $imageColumn = (new Column())
             ->withDataType($imageType);
-        parent::addColumn($key, $imageColumn);
+        $this->addColumn($key, $imageColumn);
         return $this;
     }
 
@@ -92,7 +92,7 @@ final class DefaultConfig extends Config
         $rawType = new RawType(...$args);
         $rawColumn = (new Column())
             ->withDataType($rawType);
-        parent::addColumn($key, $rawColumn);
+        $this->addColumn($key, $rawColumn);
         return $this;
     }
 }
