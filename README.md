@@ -1,3 +1,3 @@
 # DataGrid
-Library for formatting and rendering data tables<br>
-Developed to demonstrate a grasp of PHP and an understanding of SOLID principles.
+A library designed for formatting and rendering data tables.<br>
+Developed to demonstrate my understanding of PHP and grasp of SOLID principles before gaining my initial commercial experience as a developer.
